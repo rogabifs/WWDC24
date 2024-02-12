@@ -7,22 +7,37 @@
 
 import Foundation
 import SceneKit
+import RealityKit
 
 class ChladniScene: SCNScene {
     var particles: [Particles] = []
     
     func setupParticles(nParticles: Int) {
         for _ in 0..<nParticles {
-            let particle = Particles(x: .random(in: 0...1), y: .random(in: 0...1)) // Arrumar
-            particles.append(particle) // Arrumar
+            let particle = Particles(x: .random(in: 0...1) * Constantes.offset,
+                                     y: .random(in: 0...1) * Constantes.offset,
+                                     z: -( Float(10) * Particles.z))
+            particles.append(particle)
             rootNode.addChildNode(particle.node)
         }
     }
     
-    func moveParticles(chladni: ChladniFunc) {
+    public func moveParticles(chladni: ChladniFunc)  {
         for particle in particles {
-            particle.mov(chladni: chladni)
+            var actions: [SCNAction] = []
+            for _ in stride(from: 0.0, to: 3.0, by: 0.5) {
+                let updatedPosition = particle.mov(chladni: chladni)
+                let moveAction = SCNAction.move(to: SCNVector3(x: updatedPosition.x, 
+                                                               y: updatedPosition.y,
+                                                               z: -(Float(10) * Particles.z)),
+                                                duration: 0.5)
+                actions.append(moveAction)
             }
+            let sequenceAction = SCNAction.sequence(actions)
+            particle.node.runAction(sequenceAction)
+            rootNode.addChildNode(particle.node)
+            }
+
         }
     
     private func equationFunction(time: Double) -> (x: Double, y: Double, z: Double) {
@@ -43,12 +58,9 @@ class ChladniScene: SCNScene {
             actions.append(moveAction)
         }
         
-//        let scene = SCNScene()
         let sphere = SCNSphere(radius: 0.05)
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.position.z -= 1.5
-        
-        
         
         let sequenceAction = SCNAction.sequence(actions)
         sphereNode.runAction(sequenceAction)
