@@ -9,17 +9,13 @@ import Foundation
 import SceneKit
 
 class Particles  {
-    static var z = Float(1.5)
-    var x: Float
-    var y: Float
-    
-    static let zDidChangeNotification = Notification.Name("zDidChange")
-    static var zisChange = false
-    
     var node: SCNNode
     var stochasticAmplitude: Float
-    
-    
+    var x: Float
+    var y: Float
+    static var z = Float(1.5)
+    static var zisChange = false
+    static let zDidChangeNotification = Notification.Name("zDidChange")
     
     init(x: Float, y: Float, z: Float) {
         self.x = x
@@ -41,7 +37,7 @@ class Particles  {
             node.position = SCNVector3(x: x, y: y, z: -(1.5 + Float(10) * Particles.z))
             Particles.zisChange = false
         } else {
-            let eq = chladni.chladniNew(x: x, y: y, R: 0)
+            let eq = chladni.chladni(x: x, y: y, R: 0)
             stochasticAmplitude = abs(eq) * Constantes.v
             if stochasticAmplitude <= abs(chladni.minWalk) {
                 stochasticAmplitude = abs(chladni.minWalk)
@@ -49,9 +45,7 @@ class Particles  {
             
             x += .random(in: -stochasticAmplitude...stochasticAmplitude)
             y += .random(in: -stochasticAmplitude...stochasticAmplitude)
-            
-            //        updateOffset()
-            
+        
             node.position = SCNVector3(x: x, y: y, z: -(1.5 + Float(10) * Particles.z))
         }
         
@@ -59,11 +53,4 @@ class Particles  {
         
     }
     
-    func updateOffset() {
-        if x<=0 {x = x/5}
-        if x>=1 {x = x/5}
-        if y<=0 {y = y/5}
-        if y>=1 {y = y/5}
-        
-    }
 }

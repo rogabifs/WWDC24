@@ -151,7 +151,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             // Redefine o fator de escala do gesto de pinça para evitar aumentos exponenciais
             gestureRecognizer.scale = 1.0
 
-            // Faça algo com a variável zoomScale, por exemplo, atualize a escala de uma view
 
         }
     }

@@ -7,14 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		627733B42B79876E00D4C7E2 /* CoachingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627733B32B79876E00D4C7E2 /* CoachingOverlayView.swift */; };
-		627733B82B79D7CA00D4C7E2 /* InitCoachingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627733B72B79D7CA00D4C7E2 /* InitCoachingOverlay.swift */; };
 		628813A42B63D836007FA218 /* Constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A32B63D836007FA218 /* Constantes.swift */; };
 		628813A62B63D94F007FA218 /* ChladniFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A52B63D94F007FA218 /* ChladniFunc.swift */; };
 		628813A82B63DC47007FA218 /* Particles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A72B63DC46007FA218 /* Particles.swift */; };
 		628813AA2B63F60C007FA218 /* ChladniScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A92B63F60C007FA218 /* ChladniScene.swift */; };
-		628813AC2B67C362007FA218 /* SCNGeometryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813AB2B67C362007FA218 /* SCNGeometryExtension.swift */; };
-		628813AE2B67D577007FA218 /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813AD2B67D577007FA218 /* PlaneNode.swift */; };
 		62E611582B62956700569F7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E611572B62956700569F7B /* AppDelegate.swift */; };
 		62E6115A2B62956700569F7B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E611592B62956700569F7B /* art.scnassets */; };
 		62E6115C2B62956700569F7B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E6115B2B62956700569F7B /* ViewController.swift */; };
@@ -25,14 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		627733B32B79876E00D4C7E2 /* CoachingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingOverlayView.swift; sourceTree = "<group>"; };
-		627733B72B79D7CA00D4C7E2 /* InitCoachingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitCoachingOverlay.swift; sourceTree = "<group>"; };
 		628813A32B63D836007FA218 /* Constantes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constantes.swift; sourceTree = "<group>"; };
 		628813A52B63D94F007FA218 /* ChladniFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChladniFunc.swift; sourceTree = "<group>"; };
 		628813A72B63DC46007FA218 /* Particles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particles.swift; sourceTree = "<group>"; };
 		628813A92B63F60C007FA218 /* ChladniScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChladniScene.swift; sourceTree = "<group>"; };
-		628813AB2B67C362007FA218 /* SCNGeometryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNGeometryExtension.swift; sourceTree = "<group>"; };
-		628813AD2B67D577007FA218 /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; };
 		62E611542B62956700569F7B /* Teste2SceneKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teste2SceneKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E611572B62956700569F7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62E611592B62956700569F7B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -90,8 +82,6 @@
 				628813A92B63F60C007FA218 /* ChladniScene.swift */,
 				628813A72B63DC46007FA218 /* Particles.swift */,
 				628813A52B63D94F007FA218 /* ChladniFunc.swift */,
-				628813AD2B67D577007FA218 /* PlaneNode.swift */,
-				628813AB2B67C362007FA218 /* SCNGeometryExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,8 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				62F5779D2B6BC9FC000D7DDD /* SceneView.swift */,
-				627733B32B79876E00D4C7E2 /* CoachingOverlayView.swift */,
-				627733B72B79D7CA00D4C7E2 /* InitCoachingOverlay.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -188,16 +176,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				628813AE2B67D577007FA218 /* PlaneNode.swift in Sources */,
-				627733B82B79D7CA00D4C7E2 /* InitCoachingOverlay.swift in Sources */,
-				627733B42B79876E00D4C7E2 /* CoachingOverlayView.swift in Sources */,
 				62E6115C2B62956700569F7B /* ViewController.swift in Sources */,
 				628813AA2B63F60C007FA218 /* ChladniScene.swift in Sources */,
 				62E611582B62956700569F7B /* AppDelegate.swift in Sources */,
 				628813A42B63D836007FA218 /* Constantes.swift in Sources */,
 				62F5779E2B6BC9FC000D7DDD /* SceneView.swift in Sources */,
 				628813A62B63D94F007FA218 /* ChladniFunc.swift in Sources */,
-				628813AC2B67C362007FA218 /* SCNGeometryExtension.swift in Sources */,
 				628813A82B63DC47007FA218 /* Particles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
