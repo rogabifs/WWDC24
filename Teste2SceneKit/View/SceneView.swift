@@ -19,7 +19,7 @@ func SceneView(sceneView: SCNView, scene: ChladniScene) {
 
     sceneView.scene = scene
     
-    let view = SCNView(frame: CGRect(x: 0, y: 0, width: 0.5, height: 0.5))
+    let view = SCNView(frame: CGRect(x: Double(PlaneNodeView.planeNode.position.x), y: Double(PlaneNodeView.planeNode.position.y), width: 0.5, height: 0.5))
     view.isOpaque = true
     let particleNode = Particles(x: .random(in: 0...1), y: .random(in: 0...1), z: Particles.z).node
     view.scene = scene
