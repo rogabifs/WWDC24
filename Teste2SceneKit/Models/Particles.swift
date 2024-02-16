@@ -13,13 +13,16 @@ class Particles  {
     var stochasticAmplitude: Float
     var x: Float
     var y: Float
+    var zAxis: Float
     static var z = Float(1.5)
     static var zisChange = false
     static let zDidChangeNotification = Notification.Name("zDidChange")
+    var isSelected: Bool = false
     
     init(x: Float, y: Float, z: Float) {
         self.x = x
         self.y = y
+        self.zAxis = z
         self.stochasticAmplitude = 0.0
         
         let geometry = SCNSphere(radius: 0.05)
@@ -29,7 +32,7 @@ class Particles  {
         self.node = SCNNode(geometry: geometry)
         self.node.geometry?.materials = [materials]
         self.node.position = SCNVector3(x: x, y: y, z: z)
-        
+
       }
     
     func mov(chladni: ChladniFunc) -> SCNVector3 {

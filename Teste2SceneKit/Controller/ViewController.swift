@@ -10,47 +10,112 @@ import SceneKit
 import ARKit
 
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARCoachingOverlayViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    
+    var coachingOverlay: ARCoachingOverlayView!
+      
     @IBOutlet weak var slider_m: UISlider!
     
     @IBOutlet weak var slider_n: UISlider!
     
     @IBOutlet weak var slider_v: UISlider!
     
+    @IBOutlet weak var button_m: UIButton!
+    
+    @IBOutlet weak var button_n: UIButton!
+    
+    @IBOutlet weak var button_v: UIButton!
+    
+    @IBOutlet weak var text: UILabel!
+    
     let scene = ChladniScene()
     
-
+    var slidersisActive = true
+    
+    var initialAngle: CGFloat = 0.0
+    
+    var isTwoFingerPan = false
+    
+    var aux = 0
+    
+    var isActiveCoaching = true  {
+        didSet {
+            if !isActiveCoaching && aux < 2 {
+                DispatchQueue.main.async {
+                    self.loadViewIfNeeded()
+                    self.viewDidLoad()
+                }
+            }
+        }
+    }
+    
+    var isChladniScene = false {
+        didSet {
+            if !isChladniScene {
+                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) {_ in 
+                    DispatchQueue.main.async {
+                        self.updateSlidersButtonVisibility()
+                    }
+                }
+            }
+        }
+    }
+    
+    let planeScene = PlaneNodeView()
+    
     override func viewDidLoad() {
-        super.viewDidLoad()      
+        super.viewDidLoad()
         
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
-        sceneView.addGestureRecognizer(pinchGesture)
-        
-        // Set the view's delegate
         sceneView.delegate = self
+        if isActiveCoaching {
+            planeScene.addPlaneNode(sceneView: sceneView)
+            let planNodeGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanPlanNode(_:)))
+            sceneView.addGestureRecognizer(planNodeGesture)
+            let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleHandleTap(_:)))
+            doubleTapGesture.numberOfTapsRequired = 2
+            sceneView.addGestureRecognizer(doubleTapGesture)
+        } else {
+            resetScene()
+            isChladniScene = true
+            let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+            sceneView.addGestureRecognizer(pinchGesture)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+            tapGesture.numberOfTouchesRequired = 1
+            sceneView.addGestureRecognizer(tapGesture)
+            
+            let panGestureTranslation = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+            panGestureTranslation.maximumNumberOfTouches = 1
+            sceneView.addGestureRecognizer(panGestureTranslation)
+            
+            //        let panRotation = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureRotation(_:)))
+            //        panRotation.minimumNumberOfTouches = 2
+            //        panRotation.maximumNumberOfTouches = 2
+            //        sceneView.addGestureRecognizer(panRotation)
+            //
+            
+            // Show statistics such as fps and timing information
+            sceneView.showsStatistics = true
+            
+            // Config dos Sliders
+            
+            sliderConfig(slider: slider_m, const: Constantes.m)
+            sliderConfig(slider: slider_n, const: Constantes.n)
+            sliderConfig(slider: slider_v, const: Constantes.v)
+            
+            // Create a new scene
+            Scene(scene: scene)
+    
+            // Set the scene to the view
+            sceneView.scene = scene
+    
+            SceneView(sceneView: sceneView, scene: scene)
+            
+            setupObservers()
+        }
         
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Config dos Sliders
-        sliderConfig(slider: slider_m, const: Constantes.m)
-        sliderConfig(slider: slider_n, const: Constantes.n)
-        sliderConfig(slider: slider_v, const: Constantes.v)
-        
-        // Create a new scene
-        Scene(scene: scene)
-        
-        // Set the scene to the view
-        sceneView.scene = scene
-        
-        SceneView(sceneView: sceneView, scene: scene)
-        
-        setupObservers()
-        
-      
+        updateSlidersButtonVisibility()
         
     }
     
@@ -72,6 +137,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Ajusta o tamanho da sceneView
+        sceneView.frame = view.bounds
+    }
 
     // MARK: - ARSCNViewDelegate
     
@@ -89,6 +161,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
     }
+    
+    func resetScene() {
+        // Remove todos os nodes da cena
+        sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
+        
+        // Aqui você pode adicionar qualquer configuração adicional necessária para reiniciar a cena
+    }
 
     
     private func sliderConfig(slider: UISlider, const: Float) {
@@ -99,28 +178,39 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+    func updateSlidersButtonVisibility() {
+        slider_m.isHidden = isActiveCoaching
+        slider_n.isHidden = isActiveCoaching
+        slider_v.isHidden = isActiveCoaching
+        button_m.isHidden = isActiveCoaching
+        button_n.isHidden = isActiveCoaching
+        button_v.isHidden = isActiveCoaching
+        text.isHidden = !isActiveCoaching
+    }
+    
     @objc func sliderValueChanged(_ sender: UISlider) {
             // Atualizar o valor de m com base no valor atual do slider
-        
-        switch sender {
+        if slidersisActive == true {
+            switch sender {
             case slider_m:
-            Constantes.m = Float(Int(sender.value))
-            ChladniFunc.const_m = Constantes.m
-            NotificationCenter.default.post(name: ChladniFunc.mDidChangeNotification, object: nil)
-            
+                Constantes.m = Float(Int(sender.value))
+                ChladniFunc.const_m = Constantes.m
+                NotificationCenter.default.post(name: ChladniFunc.mDidChangeNotification, object: nil)
+                
             case slider_n:
-            Constantes.n = Float(Int(sender.value))
-            ChladniFunc.const_n = Constantes.n
-            NotificationCenter.default.post(name: ChladniFunc.nDidChangeNotification, object: nil)
-        
+                Constantes.n = Float(Int(sender.value))
+                ChladniFunc.const_n = Constantes.n
+                NotificationCenter.default.post(name: ChladniFunc.nDidChangeNotification, object: nil)
+                
             case slider_v:
-            Constantes.v = Float(Int(sender.value))
-            NotificationCenter.default.post(name: ChladniFunc.vDidChangeNotification, object: nil)
-            
+                Constantes.v = Float(Int(sender.value))
+                NotificationCenter.default.post(name: ChladniFunc.vDidChangeNotification, object: nil)
+                
             default:
                 break
             }
         }
+    }
     
     // Método para tratar as notificações
       func setupObservers() {
@@ -154,4 +244,129 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         }
     }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        // Obtém o ponto de toque na SceneView
+        let location = gesture.location(in: sceneView)
+        
+        // Realiza uma busca por nodes na posição do toque
+        let hitResults = sceneView.hitTest(location, options: [:])
+        
+        var anySphereSelected = false
+        
+        // Itera sobre todas as partículas e as seleciona
+        for particle in ChladniScene.particles {
+            particle.isSelected = false // Reseta a seleção de todas as partículas
+        }
+        
+        // Seleciona as partículas atingidas
+        for hitResult in hitResults {
+                if let node = hitResult.node as? SCNNode,
+                   let particle = ChladniScene.particles.first(where: { $0.node == node }) {
+                   selectAllParticles()
+                    anySphereSelected = true
+            }
+        }
+        
+        deselect(anySphereSelected: anySphereSelected)
+    }
+    
+    @objc func doubleHandleTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended {
+            isActiveCoaching = false
+            aux = 2
+        }
+    }
+    
+    private func selectAllParticles() {
+        for particle in ChladniScene.particles {
+            particle.isSelected = true
+            particle.node.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+            slidersisActive = false
+        }
+    }
+    
+    private func deselect(anySphereSelected: Bool) {
+        if !anySphereSelected {
+            for particle in ChladniScene.particles {
+                particle.isSelected = false
+                particle.node.geometry?.firstMaterial?.diffuse.contents = UIColor.black
+                slidersisActive = true
+            }
+        }
+    }
+    
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        // Obtém o movimento do gesto de pan
+        if isTwoFingerPan == false {
+            let translation = gesture.translation(in: sceneView)
+            
+            // Atualiza a posição das partículas selecionadas
+            for particle in ChladniScene.particles {
+                if particle.isSelected {
+                    particle.node.position.x += Float(translation.x) * 0.1
+                    particle.node.position.y -= Float(translation.y) * 0.1
+                    particle.x = particle.node.position.x
+                    particle.y = particle.node.position.y
+                    
+                }
+            }
+            
+            // Reseta a tradução do gesto de pan
+            gesture.setTranslation(.zero, in: sceneView)
+        }
+    }
+    
+    @objc func handlePanPlanNode(_ gesture: UIPanGestureRecognizer) {
+        // Obtém o movimento do gesto de pan
+        if isTwoFingerPan == false {
+            let translation = gesture.translation(in: sceneView)
+            
+            // Atualiza a posição das partículas selecionadas
+            PlaneNodeView.planeNode.position.x += Float(translation.x) * 0.01
+            PlaneNodeView.planeNode.position.y -= Float(translation.y) * 0.01
+
+            // Reseta a tradução do gesto de pan
+            gesture.setTranslation(.zero, in: sceneView)
+        }
+    }
+    
+//
+//    @objc func handlePanGestureRotation(_ gesture: UIPanGestureRecognizer) {
+//            switch gesture.state {
+//            case .began:
+//                if gesture.numberOfTouches == 2 {
+//                    isTwoFingerPan = true
+//                    let location1 = gesture.location(ofTouch: 0, in: sceneView)
+//                    let location2 = gesture.location(ofTouch: 1, in: sceneView)
+//                    initialAngle = atan2(location2.y - location1.y, location2.x - location1.x)
+//                }
+//            case .changed:
+//                if isTwoFingerPan {
+//                    if gesture.numberOfTouches == 2 {
+//                        let location1 = gesture.location(ofTouch: 0, in: sceneView)
+//                        let location2 = gesture.location(ofTouch: 1, in: sceneView)
+//                        let currentAngle = atan2(location2.y - location1.y, location2.x - location1.x)
+//                        let angleDelta = currentAngle - initialAngle
+//                        for particle in ChladniScene.particles {
+//                          if particle.isSelected {
+//                              particle.node.eulerAngles.y += Float(angleDelta)
+//                              particle.x = cos(particle.node.eulerAngles.y * .pi / 180)
+//                              particle.zAxis = sin(particle.node.eulerAngles.y * .pi / 180)
+//                              Particles.z = particle.zAxis
+//                              print(particle.node.eulerAngles.y)
+//                          }
+//                      }
+//                    initialAngle = currentAngle
+//                    } else {
+//                        isTwoFingerPan = false
+//                    }
+//                }
+//            case .ended, .cancelled:
+//                isTwoFingerPan = false
+//            default:
+//                break
+//            }
+//        }
+//
 }

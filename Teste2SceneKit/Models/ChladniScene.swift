@@ -10,20 +10,20 @@ import SceneKit
 import RealityKit
 
 class ChladniScene: SCNScene {
-    var particles: [Particles] = []
+    static var particles: [Particles] = []
     
     func setupParticles(nParticles: Int) {
         for _ in 0..<nParticles {
-            let particle = Particles(x: .random(in: 0...1) * Constantes.offset,
-                                     y: .random(in: 0...1) * Constantes.offset,
+            let particle = Particles(x: .random(in: PlaneNodeView.planeNode.position.x-0.5...(PlaneNodeView.planeNode.position.x + 0.5)) * Constantes.offset,
+                                     y: .random(in: (PlaneNodeView.planeNode.position.y-0.5)...PlaneNodeView.planeNode.position.y + 0.5) * Constantes.offset,
                                      z: -( Float(10) * Particles.z))
-            particles.append(particle)
+            ChladniScene.particles.append(particle)
             rootNode.addChildNode(particle.node)
         }
     }
     
     public func moveParticles(chladni: ChladniFunc)  {
-        for particle in particles {
+        for particle in ChladniScene.particles {
             var actions: [SCNAction] = []
             for _ in stride(from: 0.0, to: 3.0, by: 0.5) {
                 let updatedPosition = particle.mov(chladni: chladni)
@@ -37,7 +37,6 @@ class ChladniScene: SCNScene {
             particle.node.runAction(sequenceAction)
             rootNode.addChildNode(particle.node)
             }
-
         }
     
     private func equationFunction(time: Double) -> (x: Double, y: Double, z: Double) {
