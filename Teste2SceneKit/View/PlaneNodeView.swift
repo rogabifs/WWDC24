@@ -22,6 +22,7 @@ class PlaneNodeView {
         darkOverlayMaterial.diffuse.contents = UIColor.black.withAlphaComponent(0.9)
         darkOverlayPlaneGeometry.materials = [darkOverlayMaterial]  
         material.diffuse.contents = UIColor.white.withAlphaComponent(0.8)
+
         planeGeometry.materials = [material]
         PlaneNodeView.planeNode = SCNNode(geometry: planeGeometry)
     }
