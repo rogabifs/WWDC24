@@ -41,7 +41,10 @@ class Particles  {
             Particles.zisChange = false
         } else {
             let eq = chladni.chladni(x: x, y: y, R: 0)
+            let eq_1 = chladni.calculateValuesForParticles(xValues: [x], yValues: [y], R: 0)
             stochasticAmplitude = abs(eq) * Constantes.v
+//           stochasticAmplitude = eq_1.reduce(0.0) { $0 + abs($1) } / Float(eq_1.count) * Constantes.v
+
             if stochasticAmplitude <= abs(chladni.minWalk) {
                 stochasticAmplitude = abs(chladni.minWalk)
             }
@@ -53,7 +56,6 @@ class Particles  {
         }
         
         return node.position
-        
     }
     
 }
