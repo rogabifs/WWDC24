@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		626681E22B7EAE2B00876317 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626681E12B7EAE2B00876317 /* ARViewController.swift */; };
-		626681E42B7EB08100876317 /* ARView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 626681E32B7EB08100876317 /* ARView.storyboard */; };
+		624B0D682B81D4A000D76C01 /* AnomalyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624B0D672B81D4A000D76C01 /* AnomalyView.swift */; };
 		626681EA2B7EC21300876317 /* PlaneNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626681E92B7EC21300876317 /* PlaneNodeView.swift */; };
 		628813A42B63D836007FA218 /* Constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A32B63D836007FA218 /* Constantes.swift */; };
 		628813A62B63D94F007FA218 /* ChladniFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A52B63D94F007FA218 /* ChladniFunc.swift */; };
 		628813A82B63DC47007FA218 /* Particles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A72B63DC46007FA218 /* Particles.swift */; };
 		628813AA2B63F60C007FA218 /* ChladniScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628813A92B63F60C007FA218 /* ChladniScene.swift */; };
-		629EE85A2B7D4CBF008C6E85 /* ARViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629EE8592B7D4CBF008C6E85 /* ARViewConfig.swift */; };
 		62E611582B62956700569F7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E611572B62956700569F7B /* AppDelegate.swift */; };
 		62E6115A2B62956700569F7B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 62E611592B62956700569F7B /* art.scnassets */; };
 		62E6115C2B62956700569F7B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E6115B2B62956700569F7B /* ViewController.swift */; };
@@ -25,14 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		626681E12B7EAE2B00876317 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
-		626681E32B7EB08100876317 /* ARView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ARView.storyboard; sourceTree = "<group>"; };
+		624B0D672B81D4A000D76C01 /* AnomalyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnomalyView.swift; sourceTree = "<group>"; };
 		626681E92B7EC21300876317 /* PlaneNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNodeView.swift; sourceTree = "<group>"; };
 		628813A32B63D836007FA218 /* Constantes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constantes.swift; sourceTree = "<group>"; };
 		628813A52B63D94F007FA218 /* ChladniFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChladniFunc.swift; sourceTree = "<group>"; };
 		628813A72B63DC46007FA218 /* Particles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Particles.swift; sourceTree = "<group>"; };
 		628813A92B63F60C007FA218 /* ChladniScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChladniScene.swift; sourceTree = "<group>"; };
-		629EE8592B7D4CBF008C6E85 /* ARViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewConfig.swift; sourceTree = "<group>"; };
 		62E611542B62956700569F7B /* Teste2SceneKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teste2SceneKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62E611572B62956700569F7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62E611592B62956700569F7B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -109,9 +105,7 @@
 			children = (
 				62F5779D2B6BC9FC000D7DDD /* SceneView.swift */,
 				626681E92B7EC21300876317 /* PlaneNodeView.swift */,
-				629EE8592B7D4CBF008C6E85 /* ARViewConfig.swift */,
-				626681E12B7EAE2B00876317 /* ARViewController.swift */,
-				626681E32B7EB08100876317 /* ARView.storyboard */,
+				624B0D672B81D4A000D76C01 /* AnomalyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -176,7 +170,6 @@
 			files = (
 				62E6115A2B62956700569F7B /* art.scnassets in Resources */,
 				62E611642B62956800569F7B /* LaunchScreen.storyboard in Resources */,
-				626681E42B7EB08100876317 /* ARView.storyboard in Resources */,
 				62E611612B62956800569F7B /* Assets.xcassets in Resources */,
 				62E6115F2B62956700569F7B /* Main.storyboard in Resources */,
 			);
@@ -190,9 +183,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				62E6115C2B62956700569F7B /* ViewController.swift in Sources */,
-				629EE85A2B7D4CBF008C6E85 /* ARViewConfig.swift in Sources */,
+				624B0D682B81D4A000D76C01 /* AnomalyView.swift in Sources */,
 				628813AA2B63F60C007FA218 /* ChladniScene.swift in Sources */,
-				626681E22B7EAE2B00876317 /* ARViewController.swift in Sources */,
 				62E611582B62956700569F7B /* AppDelegate.swift in Sources */,
 				628813A42B63D836007FA218 /* Constantes.swift in Sources */,
 				62F5779E2B6BC9FC000D7DDD /* SceneView.swift in Sources */,

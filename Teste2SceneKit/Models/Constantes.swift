@@ -8,7 +8,6 @@
 import Foundation
 
 class Constantes {
-    
     static var particles: Int = 5000
     static var m: Float = 0.0
     static var n: Float = 0.0
