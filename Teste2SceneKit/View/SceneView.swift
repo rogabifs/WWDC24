@@ -27,11 +27,12 @@ func SceneView(sceneView: SCNView, scene: ChladniScene) {
     view.backgroundColor = UIColor.clear
     sceneView.scene = scene
     sceneView.scene?.rootNode.addChildNode(particleNode)
-    
+
     let light = SCNLight()
     light.type = .omni
     let lightNode = SCNNode()
     lightNode.light = light
     sceneView.pointOfView?.addChildNode(lightNode)
+    
 }
 

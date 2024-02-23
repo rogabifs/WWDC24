@@ -13,7 +13,7 @@ class ChladniScene: SCNScene {
     static var particles: [Particles] = []
     
     func setupParticles(nParticles: Int) {
-        if AnomalyView.strogAnomay == false && AnomalyView.weakAnomaly == true {
+        if (AnomalyView.strogAnomay == true && AnomalyView.weakAnomaly == false) && ViewController.isTutor == false {
             for _ in 0..<nParticles {
                 let particle = Particles(x: .random(in: PlaneNodeView.planeNode.position.x-0.5...(PlaneNodeView.planeNode.position.x + 0.5)) * Constantes.offset,
                                          y: .random(in: (PlaneNodeView.planeNode.position.y-0.5)...PlaneNodeView.planeNode.position.y + 0.5) * Constantes.offset,
@@ -21,7 +21,7 @@ class ChladniScene: SCNScene {
                 ChladniScene.particles.append(particle)
                 rootNode.addChildNode(particle.node)
             }
-        } else if AnomalyView.strogAnomay == true && AnomalyView.weakAnomaly == false {
+        } else if (AnomalyView.strogAnomay == false && AnomalyView.weakAnomaly == true) || ViewController.isTutor {
             for _ in 0..<nParticles {
                 let particle = Particles(x: 0,
                                          y: .random(in: (PlaneNodeView.planeNode.position.y-0.5)...PlaneNodeView.planeNode.position.y + 0.5) * Constantes.offset,
@@ -36,12 +36,21 @@ class ChladniScene: SCNScene {
         for particle in ChladniScene.particles {
             var actions: [SCNAction] = []
             for _ in stride(from: 0.0, to: 3.0, by: 1.5) {
-                let updatedPosition = particle.mov(chladni: chladni)
-                let moveAction = SCNAction.move(to: SCNVector3(x: updatedPosition.x,
-                                                               y: updatedPosition.y,
-                                                               z: -(Float(10) * Particles.z)),
-                                                duration: 0.5)
-                actions.append(moveAction)
+                if ViewController.nextAnomalyAux == false {
+                    let updatedPosition = particle.mov(chladni: chladni)
+                    let moveAction = SCNAction.move(to: SCNVector3(x: updatedPosition.x,
+                                                                   y: updatedPosition.y,
+                                                                   z: -(Float(10) * Particles.z)),
+                                                    duration: 0.5)
+                    actions.append(moveAction)
+                } else {
+                    let updatedPosition = particle.calculateMovFromFrequency(chladni: chladni)
+                    let moveAction = SCNAction.move(to: SCNVector3(x: updatedPosition.x,
+                                                                   y: updatedPosition.y,
+                                                                   z: -(Float(10) * Particles.z)),
+                                                    duration: 0.5)
+                    actions.append(moveAction)
+                }
             }
             let sequenceAction = SCNAction.sequence(actions)
             particle.node.runAction(sequenceAction)

@@ -40,8 +40,10 @@ class Particles  {
             node.position = SCNVector3(x: x, y: y, z: -(1.5 + Float(10) * Particles.z))
             Particles.zisChange = false
         } else {
+            print("m vale \(ChladniFunc.const_m)")
+            print("n vale \(ChladniFunc.const_n)")
             let eq = chladni.chladni(x: x, y: y, R: 0)
-            let eq_1 = chladni.calculateValuesForParticles(xValues: [x], yValues: [y], R: 0)
+//            let eq_1 = chladni.calculateValuesForParticles(xValues: [x], yValues: [y], R: 0)
             stochasticAmplitude = abs(eq) * Constantes.v
 //           stochasticAmplitude = eq_1.reduce(0.0) { $0 + abs($1) } / Float(eq_1.count) * Constantes.v
 
@@ -56,6 +58,37 @@ class Particles  {
         }
         
         return node.position
+    }
+    
+    func calculateMovFromFrequency(chladni: ChladniFunc) -> SCNVector3 {
+        if Particles.zisChange == true {
+            node.position = SCNVector3(x: x, y: y, z: -(1.5 + Float(10) * Particles.z))
+            Particles.zisChange = false
+        } else {
+            print(ToneGenerator.frequency)
+//            let (m,n) = chladni.findMN(forW: ToneGenerator.frequency) ?? (Int(),Int())
+//            print(m)
+//            print(n)
+//            ChladniFunc.const_m = Float(m)
+//            ChladniFunc.const_n = Float(n)
+            chladni.chladniAtribute(frequency: ToneGenerator.frequency)
+//            print("m vale \(ChladniFunc.const_m)")
+//            print("n vale \(ChladniFunc.const_n)")
+            let result = chladni.chladni(x: x, y: y, R: 0)
+            stochasticAmplitude = abs(result) * Constantes.v
+            //           stochasticAmplitude = eq_1.reduce(0.0) { $0 + abs($1) } / Float(eq_1.count) * Constantes.v
+            
+            if stochasticAmplitude <= abs(chladni.minWalk) {
+                stochasticAmplitude = abs(chladni.minWalk)
+            }
+            
+            x += .random(in: -stochasticAmplitude...stochasticAmplitude)
+            y += .random(in: -stochasticAmplitude...stochasticAmplitude)
+            
+            node.position = SCNVector3(x: x, y: y, z: -(1.5 + Float(10) * Particles.z))
+        }
+    
+    return node.position
     }
     
 }

@@ -163,6 +163,12 @@
                                 <rect key="frame" x="123" y="663" width="256" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMD-xi-UBm">
+                                <rect key="frame" x="30" y="70" width="106" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Play/Pause"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -184,6 +190,7 @@
                         <outlet property="button_v" destination="e2y-fo-bRq" id="6QZ-xA-ORM"/>
                         <outlet property="changeColorButton" destination="8ZV-Va-gLO" id="BVc-nR-B9x"/>
                         <outlet property="changeColorSymbol" destination="WCY-jP-9YO" id="Qjp-Sh-zdF"/>
+                        <outlet property="playPause_Button" destination="iMD-xi-UBm" id="Z0R-Bt-n1X"/>
                         <outlet property="redColorButton" destination="7XZ-6b-Dbv" id="Nz6-tB-dKf"/>
                         <outlet property="resetPlanButton" destination="ZNm-02-HeG" id="hEb-v6-0cB"/>
                         <outlet property="resetPlanSymbol" destination="Dd5-Km-o3G" id="aGI-vk-8ET"/>
